@@ -1,0 +1,1 @@
+CREATE TABLE analytics.dim_users AS SELECT * FROM stg_users

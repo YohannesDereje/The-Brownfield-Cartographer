@@ -1,6 +1,8 @@
 loguru
 networkx
 pydantic
+pyyaml
 scipy
+sqlglot
 tree-sitter
 tree-sitter-python

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -12,7 +13,7 @@ from loguru import logger
 if __package__ in {None, ""}:
 	sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from src.orchestrator import run_surveyor_pipeline
+from src.orchestrator import run_interim_pipeline
 
 
 def _looks_like_url(value: str) -> bool:
@@ -95,7 +96,33 @@ def main(argv: list[str] | None = None) -> int:
 		if resolved_repo is None:
 			return 1
 
-		run_surveyor_pipeline(str(resolved_repo))
+		result = run_interim_pipeline(str(resolved_repo))
+		module_graph = result.get("module_graph_path")
+		lineage_graph = result.get("lineage_graph_path")
+
+		if not module_graph or not Path(module_graph).exists():
+			logger.error("Missing required output artifact: .cartography/module_graph.json")
+			return 1
+
+		if not lineage_graph or not Path(lineage_graph).exists():
+			logger.error("Missing required output artifact: .cartography/lineage_graph.json")
+			return 1
+
+		logger.info("Interim submission artifacts ready: module_graph.json and lineage_graph.json")
+
+		summary_path = result.get("summary_path")
+		if summary_path and Path(summary_path).exists():
+			try:
+				summary = json.loads(Path(summary_path).read_text(encoding="utf-8"))
+				logger.info(
+					"Summary: files={}, structural_edges={}, lineage_edges={}",
+					summary.get("file_count", 0),
+					summary.get("structural_edge_count", 0),
+					summary.get("lineage_edge_count", 0),
+				)
+			except Exception:
+				logger.debug("Could not parse analysis summary at {}", summary_path)
+
 		return 0
 	except Exception as exc:
 		logger.exception("CLI analyze command failed: {}", exc)
