@@ -1,0 +1,6 @@
+loguru
+networkx
+pydantic
+scipy
+tree-sitter
+tree-sitter-python
