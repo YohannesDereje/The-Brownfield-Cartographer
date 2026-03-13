@@ -59,24 +59,14 @@ class Cartographer:
         if self.graph.number_of_nodes() == 0:
             return {"pagerank": {}, "strongly_connected_components": []}
 
-        score_metric = "pagerank"
-
         try:
             pagerank_scores = nx.pagerank(self.graph)
         except Exception as exc:
             logger.warning("Failed to compute PageRank: {}", exc)
-            try:
-                pagerank_scores = {node: float(score) for node, score in self.graph.in_degree()}
-                score_metric = "in_degree"
-                logger.warning("Falling back to in_degree for hub scoring.")
-            except Exception as fallback_exc:
-                logger.warning("Failed to compute in_degree fallback: {}", fallback_exc)
-                pagerank_scores = {node: 0.0 for node in self.graph.nodes}
-                score_metric = "none"
+            pagerank_scores = {node: 0.0 for node in self.graph.nodes}
 
         for node_path, score in pagerank_scores.items():
             self.graph.nodes[node_path]["pagerank_score"] = score
-            self.graph.nodes[node_path]["score_metric"] = score_metric
 
         components = [
             sorted(component)
@@ -86,7 +76,6 @@ class Cartographer:
 
         return {
             "pagerank": pagerank_scores,
-            "score_metric": score_metric,
             "strongly_connected_components": components,
         }
 
