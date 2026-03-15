@@ -1,0 +1,131 @@
+{
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\cd_prod.yml": {
+    "last_analyzed_hash": "af5ba5f5bf97338b8b3eb0937eae049cf1172149b21bbe6ced717179e94ed3f3"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\cd_staging.yml": {
+    "last_analyzed_hash": "8fdc60611c1822eb6089b8b7c7741ff862fa6adb37b39356c594562dbfd078a6"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\ci.yml": {
+    "last_analyzed_hash": "71e576c25b4d07cc678afcb101662c8ee548d0342bd068c05e3689986d857718"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\scripts\\dbt_cloud_run_job.py": {
+    "last_analyzed_hash": "b422bc72ed6183499fc48f10d9a4a04acd68cc7995db2d54d9d0731052033026"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.pre-commit-config.yaml": {
+    "last_analyzed_hash": "30aed8cbb4ac3579882ca0e0dbf84d25ae1f90d4f4cbbcec1423b18ae5b142a0"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\Taskfile.yml": {
+    "last_analyzed_hash": "1e9efcceab6745d7d667aae3c3a8a58ef4585b1ba1c05eb5d33a628179ea7520"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\dbt_project.yml": {
+    "last_analyzed_hash": "07dacb946cfc336a680ff12439cf572ad75af6c015a61cb7880534ff81b36a0a"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\macros\\cents_to_dollars.sql": {
+    "last_analyzed_hash": "ebf9c659ff7fc51502c15dfe5a69996589f8f06351b4bed2bba9177f5e2a74a4"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\macros\\generate_schema_name.sql": {
+    "last_analyzed_hash": "f02c7d55c58c6f1fcb7238c4a1f79f691bdecd1a57e607c93a15b218cf8488d0"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\customers.sql": {
+    "last_analyzed_hash": "1a311077a1c9019e3f54cd46417f91468a8fbfe10673751843a2ddc6d92d96a9"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\customers.yml": {
+    "last_analyzed_hash": "e0e474898914237af6f3b2ba9a710bad114864d0e83cebf6ee9f8f4bad956fa1"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\locations.sql": {
+    "last_analyzed_hash": "8ce54562dbb98bd86911ed14bf0ae8ecbd75013033cc1c4eb91a73b33a7f48e4"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\locations.yml": {
+    "last_analyzed_hash": "b77a422a9f71fa87033411e6e0f1fe61fab087a9b5bd5c32e80145cac092844e"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\metricflow_time_spine.sql": {
+    "last_analyzed_hash": "f34238deae2ed48d70648cf070f62a4ac48c36c5e515a03b8ce9e2794fecf705"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\order_items.sql": {
+    "last_analyzed_hash": "7c99b2eca6ff8be21312a3a2edf805760f7252eb1e4628585f0f265eda9dcfb1"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\order_items.yml": {
+    "last_analyzed_hash": "0bdf7ccb6c563eb96829905f2a223766e485a620d0fea8933edbe480c2e71f78"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\orders.sql": {
+    "last_analyzed_hash": "3ef8020d3460029d79f321741eb5e7b21ef2a4d38ac3d2c1d76ff91f284e12de"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\orders.yml": {
+    "last_analyzed_hash": "e666b2439cdefa4da5e737ed755fde0aa4da0ac5a374b4c392bd14d2f13f8e44"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\products.sql": {
+    "last_analyzed_hash": "404ad92d750cfb40390cafc8e1bbfc8cdadb548825eec26238761b1074581ee7"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\products.yml": {
+    "last_analyzed_hash": "618180584700ea8ec8a8eedf2a8a8bb172cddd42a269aa44be1a901a15f9897d"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\supplies.sql": {
+    "last_analyzed_hash": "ae41fbe222908674fd153bc6114363b86c8449551c71199d530d5214a8ecddf8"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\supplies.yml": {
+    "last_analyzed_hash": "8bbd09ee32cf6631f01e04f4e47b789a49c5cf30dcbe7320b713fb7865afed1d"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\__sources.yml": {
+    "last_analyzed_hash": "bb74ace1bc73a30853bbaed890c4f14c314c458f5fc2aa584eb24da301d8c445"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_customers.sql": {
+    "last_analyzed_hash": "22d867fe3931ae26c30c844add0ba3a2c5ffa1b5431f1b51bb943914f81e0308"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_customers.yml": {
+    "last_analyzed_hash": "cd51f4315da9bb0b26f2a3eb784251e9098f666c04660e2c6f5862e506657a9e"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_locations.sql": {
+    "last_analyzed_hash": "7efef216b78e9fe795bf63b1e42bda26a3192e83edf1a347a4da1218920a3993"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_locations.yml": {
+    "last_analyzed_hash": "2c1ccab64e5ad6193d45f5a5cb0503f1ae1c5e97549b674b0db39eb1aa76e9f4"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_order_items.sql": {
+    "last_analyzed_hash": "c4eeec92a4f911e20255c363fbbfbc9f553c382e3ca88c58c9eb21a3ca38f3c6"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_order_items.yml": {
+    "last_analyzed_hash": "0d150e9f61e3a7f7b0fdceac43b03ae7ff043d5261bc0446d93b6fe90c08cd1f"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_orders.sql": {
+    "last_analyzed_hash": "219dca44e577441d609fb86073864ac6db9636bf588f638cc4891b56508df7a3"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_orders.yml": {
+    "last_analyzed_hash": "366a23782208276553e108fe5fa2fc6f9de2743a99d13ffd9aca99a0d72c4a40"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_products.sql": {
+    "last_analyzed_hash": "401e3678a71f0aa76cbb4c0942e5704e726c5ef8e4321229b0edad148eed0ad9"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_products.yml": {
+    "last_analyzed_hash": "1c21c12cc84cfbeaaf336bc5f10c12c33aeb188f2a5d9d4113d3a703bc12333f"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_supplies.sql": {
+    "last_analyzed_hash": "9b14fc6cc7f1c32d964aef59f967282c5d9c081cb9ea6d886453a990a5cd19b0"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_supplies.yml": {
+    "last_analyzed_hash": "18233d5aa3c0a2cc3419b2801b88ce01b32d9b5c7e2e9cc016b464fdd615b378"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\package-lock.yml": {
+    "last_analyzed_hash": "0c390e3b35082b89eb171dc860fcd4cadbcde75003e952cb55296086d8cf5b3d"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\packages.yml": {
+    "last_analyzed_hash": "03c9fe56a3a6cf2d94f1690be92613bce3362011138ea846712311c09e7c0c74"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_customers.csv": {
+    "last_analyzed_hash": "095040bccc984e2f654e4f6d9081f5476a7f577398d2a0fb5a19fb32af2c763f"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_items.csv": {
+    "last_analyzed_hash": "bc18d101291697036d97e9fd0e6deb43fef6d1b5ce2282167462a882513980ca"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_orders.csv": {
+    "last_analyzed_hash": "0db27da9c2dbb754b31a811bbd4e3cf357a5313085f89279f405b4a75c7df971"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_products.csv": {
+    "last_analyzed_hash": "01825b18e182090b6770cee6aaf7bd52d5781a0c74bb1ff2872aac4b47809f0d"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_stores.csv": {
+    "last_analyzed_hash": "bb7139663957360115b1085baa287bdfa953544e7a10d895c2880ac2ecd3a21c"
+  },
+  "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_supplies.csv": {
+    "last_analyzed_hash": "309a2d1cfd330da2b493b411d2fe5e0aef1b463ed0281760691793f8b423bde1"
+  }
+}

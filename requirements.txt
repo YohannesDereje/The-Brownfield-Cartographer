@@ -1,8 +1,11 @@
 loguru
+langchain-core
+langgraph
 networkx
 pydantic
 pyyaml
 scipy
 sqlglot
+tenacity
 tree-sitter
 tree-sitter-python

@@ -14,6 +14,7 @@ if __package__ in {None, ""}:
 	sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from src.orchestrator import run_interim_pipeline
+from src.agents.navigator import Navigator
 
 
 def _looks_like_url(value: str) -> bool:
@@ -80,6 +81,11 @@ def build_parser() -> argparse.ArgumentParser:
 	analyze_parser = subparsers.add_parser("analyze", help="Run structural analysis")
 	analyze_parser.add_argument("--repo", required=True, help="Local repo path or remote git URL")
 
+	query_parser = subparsers.add_parser("query", help="Query a repo-specific cartography map")
+	query_parser.add_argument("--repo", required=False, help="Artifact repo slug under .cartography (example: jaffle-shop)")
+	query_parser.add_argument("--artifact-path", required=False, help="Explicit path to a cartography artifact directory")
+	query_parser.add_argument("--question", required=False, default="What happens if I delete src/agents/hydrologist.py?", help="Navigation question to ask Navigator")
+
 	return parser
 
 
@@ -87,11 +93,17 @@ def main(argv: list[str] | None = None) -> int:
 	parser = build_parser()
 	args = parser.parse_args(argv)
 
-	if args.command != "analyze":
+	if args.command not in {"analyze", "query"}:
 		parser.print_help()
 		return 1
 
 	try:
+		if args.command == "query":
+			navigator = Navigator(repo_name=args.repo, artifact_path=args.artifact_path)
+			response = navigator.answer(args.question)
+			print(response)
+			return 0
+
 		resolved_repo = _resolve_repo_path(args.repo)
 		if resolved_repo is None:
 			return 1
@@ -101,14 +113,14 @@ def main(argv: list[str] | None = None) -> int:
 		lineage_graph = result.get("lineage_graph_path")
 
 		if not module_graph or not Path(module_graph).exists():
-			logger.error("Missing required output artifact: .cartography/module_graph.json")
+			logger.error("Missing required output artifact: {}", module_graph or "<unknown module_graph_path>")
 			return 1
 
 		if not lineage_graph or not Path(lineage_graph).exists():
-			logger.error("Missing required output artifact: .cartography/lineage_graph.json")
+			logger.error("Missing required output artifact: {}", lineage_graph or "<unknown lineage_graph_path>")
 			return 1
 
-		logger.info("Interim submission artifacts ready: module_graph.json and lineage_graph.json")
+		logger.info("Interim submission artifacts ready: {} and {}", module_graph, lineage_graph)
 
 		summary_path = result.get("summary_path")
 		if summary_path and Path(summary_path).exists():

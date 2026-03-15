@@ -1,0 +1,293 @@
+﻿{
+    "nodes": [
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\ellipsis.yaml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\ellipsis.yaml",
+            "language": "yaml",
+            "file_size": 1092,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\pnpm-lock.yaml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\pnpm-lock.yaml",
+            "language": "yaml",
+            "file_size": 769008,
+            "imports": [],
+            "change_frequency": 44
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\pnpm-workspace.yaml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\pnpm-workspace.yaml",
+            "language": "yaml",
+            "file_size": 136,
+            "imports": [],
+            "change_frequency": 2
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\dependabot.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\dependabot.yml",
+            "language": "yaml",
+            "file_size": 536,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\actions\\setup-node-pnpm\\action.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\actions\\setup-node-pnpm\\action.yml",
+            "language": "yaml",
+            "file_size": 1554,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\actions\\slack-notify\\action.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\actions\\slack-notify\\action.yml",
+            "language": "yaml",
+            "file_size": 1980,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\bug_report.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\bug_report.yml",
+            "language": "yaml",
+            "file_size": 3546,
+            "imports": [],
+            "change_frequency": 1
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\config.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\config.yml",
+            "language": "yaml",
+            "file_size": 243,
+            "imports": [],
+            "change_frequency": 3
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\feature_request.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\feature_request.yml",
+            "language": "yaml",
+            "file_size": 3017,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\marketplace.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\ISSUE_TEMPLATE\\marketplace.yml",
+            "language": "yaml",
+            "file_size": 1787,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\changeset-release.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\changeset-release.yml",
+            "language": "yaml",
+            "file_size": 5294,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\cli-release.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\cli-release.yml",
+            "language": "yaml",
+            "file_size": 14452,
+            "imports": [],
+            "change_frequency": 6
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\code-qa.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\code-qa.yml",
+            "language": "yaml",
+            "file_size": 4654,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\codeql.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\codeql.yml",
+            "language": "yaml",
+            "file_size": 3942,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\evals.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\evals.yml",
+            "language": "yaml",
+            "file_size": 2752,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\marketplace-publish.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\marketplace-publish.yml",
+            "language": "yaml",
+            "file_size": 4348,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\nightly-publish.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\nightly-publish.yml",
+            "language": "yaml",
+            "file_size": 1864,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\update-contributors.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\update-contributors.yml",
+            "language": "yaml",
+            "file_size": 2272,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\website-deploy.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\website-deploy.yml",
+            "language": "yaml",
+            "file_size": 2079,
+            "imports": [],
+            "change_frequency": 1
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\website-preview.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.github\\workflows\\website-preview.yml",
+            "language": "yaml",
+            "file_size": 4175,
+            "imports": [],
+            "change_frequency": 2
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.orchestration\\active_intents.yaml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.orchestration\\active_intents.yaml",
+            "language": "yaml",
+            "file_size": 294,
+            "imports": [],
+            "change_frequency": 1
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.roo\\roomotes.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\.roo\\roomotes.yml",
+            "language": "yaml",
+            "file_size": 107,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\docker-compose.override.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\docker-compose.override.yml",
+            "language": "yaml",
+            "file_size": 2063,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\docker-compose.yml",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\docker-compose.yml",
+            "language": "yaml",
+            "file_size": 2635,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0000_young_trauma.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0000_young_trauma.sql",
+            "language": "sql",
+            "file_size": 2895,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0001_add_timeout_to_runs.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0001_add_timeout_to_runs.sql",
+            "language": "sql",
+            "file_size": 67,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0001_lowly_captain_flint.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0001_lowly_captain_flint.sql",
+            "language": "sql",
+            "file_size": 67,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0002_bouncy_blazing_skull.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0002_bouncy_blazing_skull.sql",
+            "language": "sql",
+            "file_size": 430,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0003_simple_retro_girl.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0003_simple_retro_girl.sql",
+            "language": "sql",
+            "file_size": 46,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0004_sloppy_black_knight.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0004_sloppy_black_knight.sql",
+            "language": "sql",
+            "file_size": 291,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0005_strong_skrulls.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0005_strong_skrulls.sql",
+            "language": "sql",
+            "file_size": 1153,
+            "imports": [],
+            "change_frequency": 0
+        },
+        {
+            "id": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0006_worried_spectrum.sql",
+            "type": "module",
+            "file_path": "C:\\Users\\Yohannes\\Desktop\\10 Academy\\Week-4\\cloned_repo_4\\Roo-code-master-thinker\\packages\\evals\\src\\db\\migrations\\0006_worried_spectrum.sql",
+            "language": "sql",
+            "file_size": 80,
+            "imports": [],
+            "change_frequency": 1
+        }
+    ],
+    "edges": []
+}

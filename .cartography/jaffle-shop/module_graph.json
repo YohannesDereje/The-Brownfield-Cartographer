@@ -1,0 +1,1623 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\cd_prod.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/.github/workflows/cd_prod.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\cd_staging.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/.github/workflows/cd_staging.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\ci.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/.github/workflows/ci.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.github\\workflows\\scripts\\dbt_cloud_run_job.py",
+      "language": "python",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [
+        {
+          "name": "run_job",
+          "is_public": true,
+          "line": 54,
+          "column": 5
+        },
+        {
+          "name": "main",
+          "is_public": true,
+          "line": 95,
+          "column": 5
+        },
+        {
+          "name": "get_run_status",
+          "is_public": true,
+          "line": 84,
+          "column": 5
+        }
+      ],
+      "imports": [
+        {
+          "module": "os",
+          "names": [],
+          "is_from_import": false,
+          "is_relative": false,
+          "level": 0,
+          "resolved_path": null,
+          "line": 1,
+          "column": 1
+        },
+        {
+          "module": "time",
+          "names": [],
+          "is_from_import": false,
+          "is_relative": false,
+          "level": 0,
+          "resolved_path": null,
+          "line": 2,
+          "column": 1
+        },
+        {
+          "module": "requests",
+          "names": [],
+          "is_from_import": false,
+          "is_relative": false,
+          "level": 0,
+          "resolved_path": null,
+          "line": 3,
+          "column": 1
+        }
+      ],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/.github/workflows/scripts/dbt_cloud_run_job.py"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\.pre-commit-config.yaml",
+      "language": "yaml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/.pre-commit-config.yaml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\Taskfile.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/Taskfile.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\dbt_project.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/dbt_project.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\macros\\cents_to_dollars.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/macros/cents_to_dollars.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\macros\\generate_schema_name.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/macros/generate_schema_name.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\customers.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/customers.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\customers.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/customers.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\locations.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/locations.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\locations.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/locations.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\metricflow_time_spine.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/metricflow_time_spine.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\order_items.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/order_items.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\order_items.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/order_items.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\orders.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/orders.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\orders.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/orders.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\products.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/products.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\products.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/products.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\supplies.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/supplies.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\marts\\supplies.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/marts/supplies.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\__sources.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/__sources.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_customers.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_customers.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_customers.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_customers.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_locations.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_locations.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_locations.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_locations.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_order_items.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_order_items.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_order_items.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_order_items.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_orders.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_orders.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_orders.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_orders.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_products.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_products.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_products.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_products.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_supplies.sql",
+      "language": "sql",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_supplies.sql"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\models\\staging\\stg_supplies.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/models/staging/stg_supplies.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\package-lock.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/package-lock.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\packages.yml",
+      "language": "yml",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/packages.yml"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_customers.csv",
+      "language": "csv",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/seeds/jaffle-data/raw_customers.csv"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_items.csv",
+      "language": "csv",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "context_exceeded",
+          "purpose_statement": "No implementation evidence found",
+          "documentation_drift": false,
+          "drift_reason": "Module source exceeds the bulk model context window.",
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/seeds/jaffle-data/raw_items.csv"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_orders.csv",
+      "language": "csv",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "context_exceeded",
+          "purpose_statement": "No implementation evidence found",
+          "documentation_drift": false,
+          "drift_reason": "Module source exceeds the bulk model context window.",
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/seeds/jaffle-data/raw_orders.csv"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_products.csv",
+      "language": "csv",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/seeds/jaffle-data/raw_products.csv"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_stores.csv",
+      "language": "csv",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/seeds/jaffle-data/raw_stores.csv"
+    },
+    {
+      "path": "C:\\Users\\Yohannes\\AppData\\Local\\Temp\\cartography_clone\\jaffle-shop_1773527781\\seeds\\jaffle-data\\raw_supplies.csv",
+      "language": "csv",
+      "metadata": {
+        "error": false,
+        "semanticist": {
+          "status": "ok",
+          "purpose_statement": "No implementation evidence found",
+          "purpose_statement_confidence": 0.6,
+          "documentation_drift": false,
+          "drift_reason": "No drift assessment available.",
+          "llm_run": {
+            "tier": "ModelTier.BULK",
+            "model": "mock-model",
+            "status": "ok",
+            "tokens_used": 32,
+            "context_exceeded": false,
+            "estimated_paid_cost": 0.0
+          },
+          "budget_totals": {
+            "total_tokens_processed": 0,
+            "estimated_cost_saved": 0.0
+          },
+          "domain_cluster": null,
+          "is_architectural_outlier": true,
+          "outlier_reason": "No domain clusters were available for assignment."
+        }
+      },
+      "functions": [],
+      "imports": [],
+      "classes": [],
+      "transformations": [],
+      "lineage": [],
+      "git_velocity": 0,
+      "pagerank_score": 0.023255813953488382,
+      "id": "C:/Users/Yohannes/AppData/Local/Temp/cartography_clone/jaffle-shop_1773527781/seeds/jaffle-data/raw_supplies.csv"
+    }
+  ],
+  "edges": []
+}

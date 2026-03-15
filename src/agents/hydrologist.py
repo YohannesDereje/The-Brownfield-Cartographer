@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 import re
+from tempfile import TemporaryDirectory
+from textwrap import dedent
 from typing import Any
 
 from loguru import logger
@@ -11,7 +13,10 @@ from tree_sitter import Language, Node, Parser, Query, QueryCursor
 import tree_sitter_python
 import yaml
 
+from src.analyzers.dag_config_parser import DAGConfigParser, infer_dbt_resource_name, normalize_dbt_resource_name
+from src.analyzers.sql_lineage import SQLLineageAnalyzer as DbtSQLLineageAnalyzer
 from src.models.nodes import DataLineageEdge, ModuleNode
+from src.utils.tracer import CartographyTracer, InferenceMethod
 
 
 class PythonDataFlowAnalyzer:
@@ -187,84 +192,6 @@ class PythonDataFlowAnalyzer:
 
 	def _node_text(self, node: Node, source: str) -> str:
 		return source.encode("utf-8")[node.start_byte : node.end_byte].decode("utf-8", errors="replace")
-
-
-class SQLLineageAnalyzer:
-	"""Extracts coarse-grained lineage edges from SQL and dbt SQL models."""
-
-	_DBT_REF_PATTERN = re.compile(r"\{\{\s*ref\(\s*['\"]([^'\"]+)['\"]\s*\)\s*\}\}")
-
-	def analyze_sql_lineage(self, sql_content: str, dialect: str = "duckdb") -> list[DataLineageEdge]:
-		"""Parse SQL and return TRANSFORM lineage edges from source tables to sink table."""
-		preprocessed_sql = self._preprocess_dbt_sql(sql_content)
-
-		try:
-			expression = parse_one(preprocessed_sql, read=dialect)
-		except Exception as exc:
-			logger.exception("Failed to parse SQL lineage with sqlglot: {}", exc)
-			return []
-
-		sink_uri = self._extract_sink(expression)
-		source_uris = self._extract_sources(expression, sink_uri)
-
-		return [
-			DataLineageEdge(
-				source_uri=source_uri,
-				sink_uri=sink_uri,
-				operation_type="TRANSFORM",
-				is_dynamic=False,
-			)
-			for source_uri in source_uris
-		]
-
-	def _preprocess_dbt_sql(self, sql_content: str) -> str:
-		return self._DBT_REF_PATTERN.sub(lambda match: match.group(1), sql_content)
-
-	def _extract_sink(self, expression: exp.Expression) -> str | None:
-		if isinstance(expression, exp.Create):
-			return self._table_name(expression.this)
-
-		if isinstance(expression, exp.Insert):
-			return self._table_name(expression.this)
-
-		return None
-
-	def _extract_sources(self, expression: exp.Expression, sink_uri: str | None) -> list[str]:
-		source_names: list[str] = []
-		seen: set[str] = set()
-
-		for table in expression.find_all(exp.Table):
-			table_name = self._table_name(table)
-			if not table_name:
-				continue
-			if sink_uri is not None and table_name == sink_uri:
-				continue
-			if table_name in seen:
-				continue
-			seen.add(table_name)
-			source_names.append(table_name)
-
-		return source_names
-
-	def _table_name(self, node: exp.Expression | None) -> str | None:
-		if node is None:
-			return None
-
-		if isinstance(node, exp.Schema):
-			node = node.this
-
-		if isinstance(node, exp.Table):
-			parts = [part for part in [node.catalog, node.db, node.name] if part]
-			return ".".join(parts)
-
-		if isinstance(node, exp.Identifier):
-			return node.name
-
-		name = getattr(node, "name", None)
-		if isinstance(name, str) and name:
-			return name
-
-		return node.sql() if hasattr(node, "sql") else None
 
 
 class DAGConfigAnalyzer:
@@ -470,10 +397,12 @@ class DAGConfigAnalyzer:
 class Hydrologist:
 	"""Master lineage engine that hydrates modules, builds graph, and computes blast radius."""
 
-	def __init__(self) -> None:
+	def __init__(self, trace_path: str | Path = ".cartography/cartography_trace.jsonl", repo_root: str | Path | None = None) -> None:
 		self.python_analyzer = PythonDataFlowAnalyzer()
-		self.sql_analyzer = SQLLineageAnalyzer()
-		self.dag_config_analyzer = DAGConfigAnalyzer()
+		self.sql_analyzer = DbtSQLLineageAnalyzer()
+		self.dag_config_analyzer = DAGConfigParser()
+		self.tracer = CartographyTracer(trace_path)
+		self.repo_root = Path(repo_root).resolve() if repo_root is not None else None
 
 	def hydrate_repository_lineage(self, nodes: list[ModuleNode]) -> list[ModuleNode]:
 		"""Populate node.lineage by dispatching to language/config/orchestration analyzers."""
@@ -492,9 +421,9 @@ class Hydrologist:
 				lineage_edges.extend(self.python_analyzer.analyze_python_lineage(content, str(file_path)))
 				lineage_edges.extend(self.dag_config_analyzer.analyze_dag_logic(content, str(file_path)))
 			elif suffix == ".sql":
-				lineage_edges.extend(self.sql_analyzer.analyze_sql_lineage(content))
+				lineage_edges.extend(self.sql_analyzer.analyze_sql_lineage(content, str(file_path)))
 			elif suffix in {".yml", ".yaml"}:
-				lineage_edges.extend(self.dag_config_analyzer.analyze_yaml_config(content, str(file_path)))
+				lineage_edges.extend(self.dag_config_analyzer.parse_dbt_schema(content, str(file_path)))
 
 			node.lineage = lineage_edges
 
@@ -505,11 +434,7 @@ class Hydrologist:
 		graph = nx.DiGraph()
 
 		module_paths = {self._normalize_path(node.path): node for node in nodes}
-		module_canonical_index: dict[str, str] = {}
-		for normalized_path in module_paths:
-			canonical = self._canonical_uri(normalized_path)
-			if canonical:
-				module_canonical_index[canonical] = normalized_path
+		module_canonical_index = self._build_module_canonical_index(module_paths.keys())
 
 		for module_path, module in module_paths.items():
 			graph.add_node(module_path, kind="module", path=module_path, language=module.language)
@@ -541,6 +466,44 @@ class Hydrologist:
 				if sink_node:
 					graph.add_edge(module_path, sink_node, operation_type=op_type)
 
+		return graph
+
+	def upsert_module_lineage(
+		self,
+		graph: nx.DiGraph,
+		module: ModuleNode,
+		nodes: list[ModuleNode],
+	) -> nx.DiGraph:
+		"""Update one module's lineage edges while preserving the rest of the lineage graph."""
+		module_paths = {self._normalize_path(node.path): node for node in nodes}
+		module_canonical_index = self._build_module_canonical_index(module_paths.keys())
+
+		module_path = self._normalize_path(module.path)
+		if graph.has_node(module_path):
+			edges_to_remove = []
+			for source_node, target_node, edge_data in graph.in_edges(module_path, data=True):
+				if edge_data.get("emitter") == module_path:
+					edges_to_remove.append((source_node, target_node))
+			for source_node, target_node, edge_data in graph.out_edges(module_path, data=True):
+				if edge_data.get("emitter") == module_path:
+					edges_to_remove.append((source_node, target_node))
+			if edges_to_remove:
+				graph.remove_edges_from(edges_to_remove)
+		graph.add_node(module_path, kind="module", path=module_path, language=module.language)
+
+		for lineage_edge in module.lineage:
+			op_type = lineage_edge.operation_type
+			source_node = self._resolve_graph_node(lineage_edge.source_uri, module_canonical_index, graph)
+			sink_node = self._resolve_graph_node(lineage_edge.sink_uri, module_canonical_index, graph)
+
+			if op_type == "READ" and source_node:
+				graph.add_edge(source_node, module_path, operation_type=op_type, is_dynamic=lineage_edge.is_dynamic, emitter=module_path)
+			elif op_type == "WRITE" and sink_node:
+				graph.add_edge(module_path, sink_node, operation_type=op_type, is_dynamic=lineage_edge.is_dynamic, emitter=module_path)
+			elif source_node and sink_node:
+				graph.add_edge(source_node, sink_node, operation_type=op_type, is_dynamic=lineage_edge.is_dynamic, emitter=module_path)
+
+		self._prune_orphan_external_nodes(graph)
 		return graph
 
 	def get_blast_radius(self, target_path: str, nodes: list[ModuleNode]) -> set[str]:
@@ -575,9 +538,27 @@ class Hydrologist:
 
 		for node_id in graph.nodes:
 			if graph.in_degree(node_id) == 0:
-				sources.append(self._display_node_label(graph, node_id))
+				source_label = self._display_node_label(graph, node_id)
+				sources.append(source_label)
+				self.tracer.log_action(
+					agent_name="hydrologist",
+					action_type="data_source_identified",
+					evidence_source=self._boundary_evidence_source(graph, node_id),
+					confidence_level=1.0,
+					inference_method=InferenceMethod.STATIC_ANALYSIS,
+					node_label=source_label,
+				)
 			if graph.out_degree(node_id) == 0:
-				sinks.append(self._display_node_label(graph, node_id))
+				sink_label = self._display_node_label(graph, node_id)
+				sinks.append(sink_label)
+				self.tracer.log_action(
+					agent_name="hydrologist",
+					action_type="data_sink_identified",
+					evidence_source=self._boundary_evidence_source(graph, node_id),
+					confidence_level=1.0,
+					inference_method=InferenceMethod.STATIC_ANALYSIS,
+					node_label=sink_label,
+				)
 
 		return {
 			"ultimate_sources": sorted(set(sources)),
@@ -668,6 +649,10 @@ class Hydrologist:
 		if not normalized:
 			return ""
 
+		dbt_name = normalize_dbt_resource_name(normalized)
+		if dbt_name:
+			return dbt_name
+
 		token = normalized.rsplit("/", 1)[-1]
 		lower_token = token.lower()
 
@@ -682,7 +667,41 @@ class Hydrologist:
 		return token.lower()
 
 	def _normalize_path(self, path_value: str) -> str:
-		return str(path_value).replace("\\", "/")
+		path_text = str(path_value).replace("\\", "/")
+		if not path_text:
+			return path_text
+		candidate = Path(path_text)
+		if self.repo_root is not None:
+			try:
+				resolved = candidate.resolve(strict=False)
+				relative = resolved.relative_to(self.repo_root)
+				return str(relative).replace("\\", "/")
+			except Exception:
+				pass
+		return path_text
+
+	def _build_module_canonical_index(self, normalized_paths: Any) -> dict[str, str]:
+		index: dict[str, str] = {}
+		for normalized_path in normalized_paths:
+			canonical = self._canonical_uri(str(normalized_path))
+			if not canonical:
+				continue
+			existing = index.get(canonical)
+			if existing is None or self._path_preference(str(normalized_path)) > self._path_preference(existing):
+				index[canonical] = str(normalized_path)
+		return index
+
+	def _path_preference(self, path_value: str) -> int:
+		suffix = Path(path_value).suffix.lower()
+		if suffix == ".sql":
+			return 4
+		if suffix == ".py":
+			return 3
+		if suffix in {".yml", ".yaml"}:
+			return 2
+		if suffix == ".csv":
+			return 1
+		return 0
 
 	def _display_node_label(self, graph: nx.DiGraph, node_id: str) -> str:
 		attrs = graph.nodes.get(node_id, {})
@@ -691,6 +710,17 @@ class Hydrologist:
 		if attrs.get("kind") == "external":
 			return attrs.get("raw_uri") or attrs.get("canonical_uri") or node_id
 		return node_id
+
+	def _boundary_evidence_source(self, graph: nx.DiGraph, node_id: str) -> str:
+		label = self._display_node_label(graph, node_id)
+		return f"{label}:1"
+
+	def _prune_orphan_external_nodes(self, graph: nx.DiGraph) -> None:
+		for node_id, attrs in list(graph.nodes(data=True)):
+			if attrs.get("kind") != "external":
+				continue
+			if graph.degree(node_id) == 0:
+				graph.remove_node(node_id)
 
 	def _compute_critical_nodes(self, graph: nx.DiGraph, top_n: int = 3) -> list[tuple[str, float]]:
 		if graph.number_of_nodes() == 0:
@@ -742,8 +772,8 @@ def run_sql_lineage_smoke_test() -> list[DataLineageEdge]:
 	join {{ ref('stg_customers') }} as c
 		on o.customer_id = c.customer_id
 	"""
-	analyzer = SQLLineageAnalyzer()
-	return analyzer.analyze_sql_lineage(sample_sql, dialect="duckdb")
+	analyzer = DbtSQLLineageAnalyzer()
+	return analyzer.analyze_sql_lineage(sample_sql, file_path="models/marts/orders_enriched.sql", dialect="duckdb")
 
 
 def run_config_lineage_smoke_test() -> list[DataLineageEdge]:

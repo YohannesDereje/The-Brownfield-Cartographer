@@ -2,14 +2,17 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import re
 import subprocess
 
 from loguru import logger
 import networkx as nx
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_fixed
 from tree_sitter import Node, Query, QueryCursor
 
 from src.analyzers.tree_sitter_analyzer import TreeSitterAnalyzer
 from src.models.nodes import FunctionNode, ImportNode, ModuleNode
+from src.utils.tracer import CartographyTracer, InferenceMethod
 
 
 IGNORED_DIRS = {
@@ -42,8 +45,33 @@ class SurveyorAgent:
     ]
     """
 
-    def __init__(self, analyzer: TreeSitterAnalyzer) -> None:
+    def __init__(self, analyzer: TreeSitterAnalyzer, trace_path: str | Path = ".cartography/cartography_trace.jsonl") -> None:
         self.analyzer = analyzer
+        self.tracer = CartographyTracer(trace_path)
+        self.file_processor_model = os.getenv("SURVEYOR_FILE_PROCESSOR_MODEL", "qwen/qwen3.5-9b")
+
+    @staticmethod
+    def is_git_url(value: str) -> bool:
+        candidate = (value or "").strip()
+        if not candidate:
+            return False
+        lowered = candidate.lower()
+        if lowered.startswith("https://github.com/") or lowered.startswith("http://github.com/"):
+            return True
+        if lowered.startswith("git@github.com:"):
+            return True
+        return lowered.endswith(".git")
+
+    @staticmethod
+    def detect_input_type(value: str | Path) -> str:
+        candidate = str(value).strip()
+        if SurveyorAgent.is_git_url(candidate):
+            return "remote"
+        if Path(candidate).expanduser().exists():
+            return "local"
+        if re.match(r"^[a-zA-Z]+://", candidate):
+            return "remote"
+        return "local"
 
     def scan_directory(self, root_path: str | Path) -> list[Path]:
         root = Path(root_path).resolve()
@@ -95,6 +123,39 @@ class SurveyorAgent:
                     graph.add_edge(module_path, target_path)
         return graph
 
+    def upsert_module_dependencies(
+        self,
+        graph: nx.DiGraph,
+        module: ModuleNode,
+        modules: list[ModuleNode],
+    ) -> nx.DiGraph:
+        """Update one module node and its import edges without rebuilding the whole graph."""
+        module_path = self._normalize_path(module.path)
+        if graph.has_node(module_path):
+            graph.remove_edges_from(list(graph.in_edges(module_path)) + list(graph.out_edges(module_path)))
+
+        graph.add_node(
+            module_path,
+            path=module.path,
+            language=module.language,
+            metadata=module.metadata,
+            functions=[function.model_dump() for function in module.functions],
+            imports=[import_node.model_dump() for import_node in module.imports],
+            classes=[class_node.model_dump() for class_node in module.classes],
+            transformations=[item.model_dump() for item in module.transformations],
+            lineage=[edge.model_dump() for edge in module.lineage],
+        )
+
+        module_paths = {self._normalize_path(item.path) for item in modules}
+        for import_edge in module.imports:
+            if not import_edge.resolved_path:
+                continue
+            target_path = self._normalize_path(import_edge.resolved_path)
+            if target_path in module_paths:
+                graph.add_edge(module_path, target_path)
+
+        return graph
+
     def compute_architectural_hubs(self, graph: nx.DiGraph, top_n: int = 10) -> list[str]:
         if graph.number_of_nodes() == 0:
             return []
@@ -104,10 +165,32 @@ class SurveyorAgent:
             logger.warning("PageRank failed in Surveyor: {}", exc)
             scores = {node: float(degree) for node, degree in graph.in_degree()}
         ranked = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+        evidence_source = f"{ranked[0][0]}:1" if ranked else "import_graph:1"
+        self.tracer.log_action(
+            agent_name="surveyor",
+            action_type="pagerank_calculated",
+            evidence_source=evidence_source,
+            confidence_level=1.0,
+            inference_method=InferenceMethod.STATIC_ANALYSIS,
+            top_module=ranked[0][0] if ranked else None,
+            top_score=ranked[0][1] if ranked else 0.0,
+            node_count=graph.number_of_nodes(),
+            edge_count=graph.number_of_edges(),
+        )
         return [node for node, _ in ranked[:top_n]]
 
     def detect_circular_dependencies(self, graph: nx.DiGraph) -> list[list[str]]:
-        return [sorted(list(component)) for component in nx.strongly_connected_components(graph) if len(component) > 1]
+        components = [sorted(list(component)) for component in nx.strongly_connected_components(graph) if len(component) > 1]
+        for component in components:
+            self.tracer.log_action(
+                agent_name="surveyor",
+                action_type="circular_dependency_found",
+                evidence_source=f"{component[0]}:1",
+                confidence_level=1.0,
+                inference_method=InferenceMethod.STATIC_ANALYSIS,
+                cycle=component,
+            )
+        return components
 
     def get_git_velocity(self, repo_path: str, files: list[str]) -> dict[str, int]:
         velocity: dict[str, int] = {}
@@ -116,13 +199,7 @@ class SurveyorAgent:
             if rel_path is None:
                 continue
             try:
-                result = subprocess.run(
-                    ["git", "log", "--follow", "--pretty=format:%H", "--", rel_path],
-                    cwd=repo_path,
-                    capture_output=True,
-                    text=True,
-                    check=False,
-                )
+                result = self._run_git_log_with_retry(repo_path, rel_path)
                 if result.returncode != 0:
                     continue
                 commits = [line for line in result.stdout.splitlines() if line.strip()]
@@ -130,6 +207,21 @@ class SurveyorAgent:
             except Exception as exc:
                 logger.warning("git velocity failed for {}: {}", file_path, exc)
         return velocity
+
+    @retry(
+        wait=wait_fixed(2),
+        stop=stop_after_attempt(5),
+        retry=retry_if_exception_type((subprocess.SubprocessError, OSError)),
+        reraise=True,
+    )
+    def _run_git_log_with_retry(self, repo_path: str, rel_path: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            ["git", "log", "--follow", "--pretty=format:%H", "--", rel_path],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
     def _extract_functions(self, path: Path, root: Node, source: bytes) -> list[FunctionNode]:
         query = self.analyzer.compile_query(path, self._FUNCTION_QUERY)

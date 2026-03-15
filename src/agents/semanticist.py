@@ -10,13 +10,65 @@ import re
 from typing import Any
 
 from loguru import logger
+from tenacity import retry, retry_if_exception, stop_after_attempt, wait_fixed
 
 from src.models.nodes import ModuleNode
+from src.utils.tracer import CartographyTracer, InferenceMethod
 
 try:
 	from openai import OpenAI
 except Exception:  # pragma: no cover - optional dependency
 	OpenAI = None
+
+
+def _is_rate_limit_error(exc: BaseException) -> bool:
+	status_code = getattr(exc, "status_code", None)
+	if status_code == 429:
+		return True
+
+	response = getattr(exc, "response", None)
+	response_status = getattr(response, "status_code", None)
+	if response_status == 429:
+		return True
+
+	message = str(exc).lower()
+	return "rate limit" in message or "429" in message or "temporarily rate-limited" in message
+
+
+def _safe_error_message(exc: BaseException) -> str:
+	response = getattr(exc, "response", None)
+	if response is not None:
+		response_json_getter = getattr(response, "json", None)
+		if callable(response_json_getter):
+			try:
+				payload = response_json_getter()
+				if isinstance(payload, dict):
+					message = payload.get("error", {}).get("message", "Unknown Error")
+					if message:
+						return str(message)
+			except Exception:
+				pass
+		response_text = getattr(response, "text", None)
+		if isinstance(response_text, str) and response_text.strip():
+			return response_text.strip()
+
+	args = getattr(exc, "args", ())
+	if args:
+		first_arg = args[0]
+		if isinstance(first_arg, dict):
+			message = first_arg.get("error", {}).get("message", "Unknown Error")
+			return str(message)
+
+	return str(exc) or "Unknown Error"
+
+
+def _log_retry_before_sleep(retry_state: Any) -> None:
+	exc = retry_state.outcome.exception() if retry_state.outcome else None
+	err_message = _safe_error_message(exc) if isinstance(exc, BaseException) else "Unknown Error"
+	wait_seconds = getattr(retry_state.next_action, "sleep", None)
+	if wait_seconds is None:
+		wait_seconds = 0
+	logger.warning("Retrying Semanticist LLM call in {} seconds due to rate-limit error: {}", wait_seconds, err_message)
 
 
 class ModelTier(str, Enum):
@@ -34,8 +86,8 @@ class ContextWindowBudget:
 		gpt4_reference_price_per_1k_tokens: float = 0.03,
 	) -> None:
 		self.model_context_windows = model_context_windows or {
-			"stepfun/step-3.5-flash:free": 256_000,
-			"meta-llama/llama-3.3-70b-instruct:free": 131_072,
+			"deepseek/deepseek-chat-v3.1": 128_000,
+			"qwen/qwen3.5-9b": 128_000,
 			"nvidia/llama-nemotron-embed-v1-1b-v2:free": 8_192,
 		}
 		self.gpt4_reference_price_per_1k_tokens = gpt4_reference_price_per_1k_tokens
@@ -81,18 +133,21 @@ class Semanticist:
 	def __init__(
 		self,
 		trace_path: str | Path = ".cartography/cartography_trace.jsonl",
-		bulk_model: str = "stepfun/step-3.5-flash:free",
-		synthesis_model: str = "meta-llama/llama-3.3-70b-instruct:free",
+		bulk_model: str | None = None,
+		synthesis_model: str | None = None,
 		embedding_model: str = "nvidia/llama-nemotron-embed-v1-1b-v2:free",
 		context_budget: ContextWindowBudget | None = None,
 		http_referer: str = "https://example.com",
 	) -> None:
 		self.trace_path = Path(trace_path)
 		self.trace_path.parent.mkdir(parents=True, exist_ok=True)
+		self.tracer = CartographyTracer(self.trace_path)
 		self.context_budget = context_budget or ContextWindowBudget()
+		resolved_bulk_model = bulk_model or os.getenv("SEMANTICIST_BULK_MODEL", "deepseek/deepseek-chat-v3.1")
+		resolved_synthesis_model = synthesis_model or os.getenv("SEMANTICIST_ARCHITECT_MODEL", "deepseek/deepseek-chat-v3.1")
 		self.model_tiers: dict[ModelTier, str] = {
-			ModelTier.BULK: bulk_model,
-			ModelTier.SYNTHESIS: synthesis_model,
+			ModelTier.BULK: resolved_bulk_model,
+			ModelTier.SYNTHESIS: resolved_synthesis_model,
 			ModelTier.EMBEDDING: embedding_model,
 		}
 		self.http_referer = http_referer
@@ -181,20 +236,32 @@ class Semanticist:
 			return result
 
 		try:
-			response = self._openai_client.chat.completions.create(
-				model=model,
-				messages=[{"role": "user", "content": prompt}],
-			)
+			response = self._create_chat_completion(model=model, prompt=prompt)
 			response_text = response.choices[0].message.content
 			result["status"] = "ok"
 			result["response"] = response_text
 		except Exception as exc:
 			result["status"] = "error"
-			result["response"] = str(exc)
+			result["response"] = _safe_error_message(exc)
 			logger.exception("Semanticist LLM call failed")
 
 		self._write_trace("semanticist.llm_call", result)
 		return result
+
+	@retry(
+		retry=retry_if_exception(_is_rate_limit_error),
+		wait=wait_fixed(2),
+		stop=stop_after_attempt(5),
+		reraise=True,
+		before_sleep=_log_retry_before_sleep,
+	)
+	def _create_chat_completion(self, *, model: str, prompt: str):
+		if self._openai_client is None:
+			raise RuntimeError("LLM client unavailable")
+		return self._openai_client.chat.completions.create(
+			model=model,
+			messages=[{"role": "user", "content": prompt}],
+		)
 
 	def annotate_module_with_llm_run(
 		self,
@@ -239,18 +306,16 @@ class Semanticist:
 		return module_node
 
 	def _write_trace(self, action: str, payload: dict[str, Any]) -> None:
-		tokens_used = int(payload.get("tokens_used", 0))
-		model = str(payload.get("model", "unknown"))
-		record = {
-			"timestamp": datetime.now(timezone.utc).isoformat(),
-			"agent": "semanticist",
-			"model": model,
-			"tokens_used": tokens_used,
-			"agent_action": action,
-			"payload": payload,
-		}
-		with self.trace_path.open("a", encoding="utf-8") as handle:
-			handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+		self.tracer.log_action(
+			agent_name="semanticist",
+			action_type=action,
+			evidence_source=self._trace_evidence_source(payload),
+			confidence_level=self._resolve_semantic_confidence(payload),
+			inference_method=InferenceMethod.LLM_INFERENCE,
+			model=str(payload.get("model", "unknown")),
+			tokens_used=int(payload.get("tokens_used", 0)),
+			payload=payload,
+		)
 
 	def generate_purpose_statement(self, module_node: ModuleNode) -> ModuleNode:
 		"""Generate a business-purpose summary and doc drift assessment for a module."""
@@ -292,6 +357,7 @@ class Semanticist:
 			{
 				"status": llm_run["status"],
 				"purpose_statement": parsed["purpose_statement"],
+				"purpose_statement_confidence": 0.6,
 				"documentation_drift": parsed["documentation_drift"],
 				"drift_reason": parsed["drift_reason"],
 				"llm_run": {
@@ -308,6 +374,23 @@ class Semanticist:
 				},
 			}
 		)
+		self.tracer.log_action(
+			agent_name="semanticist",
+			action_type="purpose_statement_generated",
+			evidence_source=f"{module_node.path}:1",
+			confidence_level=self._resolve_semantic_confidence(semanticist_metadata),
+			inference_method=InferenceMethod.LLM_INFERENCE,
+			purpose_statement=parsed["purpose_statement"],
+		)
+		if parsed["documentation_drift"]:
+			self.tracer.log_action(
+				agent_name="semanticist",
+				action_type="documentation_drift_detected",
+				evidence_source=f"{module_node.path}:1",
+				confidence_level=self._resolve_semantic_confidence(semanticist_metadata),
+				inference_method=InferenceMethod.LLM_INFERENCE,
+				drift_reason=parsed["drift_reason"],
+			)
 		return module_node
 
 	def analyze_repository_semantics(self, nodes: list[ModuleNode]) -> list[ModuleNode]:
@@ -437,6 +520,75 @@ class Semanticist:
 		)
 		return brief
 
+	def answer_day_one_questions(
+		self,
+		*,
+		surveyor_data: dict[str, Any],
+		hydrologist_data: dict[str, Any],
+		nodes: list[ModuleNode],
+	) -> dict[str, Any]:
+		"""Answer the five FDE day-one onboarding questions with evidence-backed synthesis."""
+		sources, sinks = self._extract_boundary_lists(hydrologist_data)
+		top_pagerank = self._top_ranked_float_map(surveyor_data.get("pagerank", {}), limit=8)
+		top_velocity = self._top_ranked_int_map(surveyor_data.get("git_velocity", {}), limit=12)
+		cluster_distribution = self._cluster_distribution(nodes)
+		purpose_samples = self._purpose_samples(nodes, limit=12)
+
+		evidence_pack = {
+			"repo": str(surveyor_data.get("repo") or "unknown"),
+			"structural_graph_metrics": {
+				"node_count": int(surveyor_data.get("structural_node_count", 0) or 0),
+				"edge_count": int(surveyor_data.get("structural_edge_count", 0) or 0),
+				"lineage_node_count": int(surveyor_data.get("lineage_node_count", 0) or 0),
+				"lineage_edge_count": int(surveyor_data.get("lineage_edge_count", 0) or 0),
+			},
+			"architectural_hubs": list(surveyor_data.get("architectural_hubs", []) or [])[:8],
+			"top_pagerank_modules": top_pagerank,
+			"git_velocity_top_changes": top_velocity,
+			"lineage_sources": sources,
+			"lineage_sinks": sinks,
+			"cluster_distribution": cluster_distribution,
+			"module_purpose_samples": purpose_samples,
+		}
+
+		prompt = self._build_day_one_questions_prompt(evidence_pack)
+		llm_run = self._call_llm(
+			prompt,
+			ModelTier.SYNTHESIS,
+			metadata={
+				"action": "answer_day_one_questions",
+				"source_count": len(sources),
+				"sink_count": len(sinks),
+				"pagerank_count": len(top_pagerank),
+				"velocity_count": len(top_velocity),
+			},
+		)
+		answers = self._parse_day_one_questions(llm_run.get("response"), evidence_pack)
+
+		result = {
+			"status": llm_run["status"],
+			"questions": answers,
+			"evidence_pack": evidence_pack,
+			"llm_run": {
+				"tier": llm_run["tier"],
+				"model": llm_run["model"],
+				"status": llm_run["status"],
+				"tokens_used": llm_run["tokens_used"],
+				"context_exceeded": llm_run["context_exceeded"],
+				"estimated_paid_cost": llm_run["usage"]["estimated_paid_cost"],
+			},
+		}
+		self._write_trace(
+			"semanticist.day_one_questions",
+			{
+				"model": llm_run["model"],
+				"tokens_used": llm_run["tokens_used"],
+				"status": llm_run["status"],
+				"question_count": len(answers),
+			},
+		)
+		return result
+
 	def _load_module_source(self, module_node: ModuleNode) -> tuple[str, str]:
 		metadata = module_node.metadata or {}
 		for key in ("source_code", "source", "content"):
@@ -546,6 +698,165 @@ class Semanticist:
 			+ "\n".join(outlier_lines or ["- None identified"])
 		)
 
+	def _build_day_one_questions_prompt(self, evidence_pack: dict[str, Any]) -> str:
+		questions = [
+			"What is the primary data ingestion path?",
+			"What are the 3-5 most critical output datasets/endpoints?",
+			"What is the blast radius if the most critical module fails?",
+			"Where is the business logic concentrated vs. distributed?",
+			"What has changed most frequently in the last 90 days (git velocity map)?",
+		]
+		return (
+			"You are a senior forward-deployed engineer preparing a 72-hour onboarding brief.\n"
+			"Answer exactly the five questions provided below using ONLY the evidence pack.\n"
+			"For every answer, include concrete citations to evidence.\n"
+			"Citations must be path-and-line strings (for example src/module.py:1) or explicit graph metrics "
+			"(for example pagerank[src/module.py]=0.1234, degree_centrality[src/module.py]=0.3210, lineage_edge_count=42).\n"
+			"Do not invent file paths, datasets, endpoints, or metrics that are not present in the evidence pack.\n"
+			"Return JSON only in this shape:\n"
+			"{\"answers\":[{\"question\":\"...\",\"answer\":\"...\",\"evidence\":[\"...\",\"...\"]}]}\n"
+			"Ensure all five questions are present exactly once.\n\n"
+			"Questions:\n"
+			+ "\n".join(f"- {question}" for question in questions)
+			+ "\n\nEvidence pack:\n"
+			+ json.dumps(evidence_pack, indent=2)
+		)
+
+	def _extract_boundary_lists(self, hydrologist_data: dict[str, Any]) -> tuple[list[str], list[str]]:
+		boundaries = hydrologist_data.get("boundaries")
+		if isinstance(boundaries, dict):
+			sources = [str(item) for item in boundaries.get("ultimate_sources", []) if str(item).strip()]
+			sinks = [str(item) for item in boundaries.get("ultimate_sinks", []) if str(item).strip()]
+			return sources, sinks
+
+		sources = [str(item) for item in hydrologist_data.get("ultimate_sources", []) if str(item).strip()]
+		sinks = [str(item) for item in hydrologist_data.get("ultimate_sinks", []) if str(item).strip()]
+		return sources, sinks
+
+	def _top_ranked_float_map(self, payload: Any, limit: int) -> list[dict[str, Any]]:
+		if not isinstance(payload, dict):
+			return []
+		ranked = sorted(
+			[(str(key), float(value)) for key, value in payload.items()],
+			key=lambda item: item[1],
+			reverse=True,
+		)
+		return [{"path": key, "value": value} for key, value in ranked[:limit]]
+
+	def _top_ranked_int_map(self, payload: Any, limit: int) -> list[dict[str, Any]]:
+		if not isinstance(payload, dict):
+			return []
+		ranked = sorted(
+			[(str(key), int(value)) for key, value in payload.items()],
+			key=lambda item: item[1],
+			reverse=True,
+		)
+		return [{"path": key, "value": value} for key, value in ranked[:limit]]
+
+	def _cluster_distribution(self, nodes: list[ModuleNode]) -> list[dict[str, Any]]:
+		counts: dict[str, int] = {}
+		for module_node in nodes:
+			cluster = module_node.metadata.get("semanticist", {}).get("domain_cluster")
+			if not isinstance(cluster, str) or not cluster.strip():
+				cluster = "unassigned"
+			counts[cluster] = counts.get(cluster, 0) + 1
+		total = sum(counts.values())
+		if total <= 0:
+			return []
+		ranked = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+		return [
+			{
+				"cluster": cluster,
+				"module_count": count,
+				"share": round(count / total, 4),
+			}
+			for cluster, count in ranked
+		]
+
+	def _purpose_samples(self, nodes: list[ModuleNode], limit: int) -> list[dict[str, str]]:
+		rows: list[dict[str, str]] = []
+		for module_node in nodes:
+			semanticist_metadata = module_node.metadata.get("semanticist", {})
+			purpose = str(semanticist_metadata.get("purpose_statement") or "").strip()
+			if not purpose:
+				continue
+			rows.append({"path": module_node.path, "purpose_statement": purpose})
+			if len(rows) >= limit:
+				break
+		return rows
+
+	def _default_day_one_questions(self, evidence_pack: dict[str, Any]) -> list[dict[str, Any]]:
+		sources = evidence_pack.get("lineage_sources", [])
+		sinks = evidence_pack.get("lineage_sinks", [])
+		top_pagerank = evidence_pack.get("top_pagerank_modules", [])
+		top_velocity = evidence_pack.get("git_velocity_top_changes", [])
+		cluster_distribution = evidence_pack.get("cluster_distribution", [])
+
+		ingestion_answer = (
+			f"The likely ingestion path begins from {sources[0]} and flows into downstream transformations and sinks."
+			if sources
+			else "The ingestion path cannot be confidently identified from available lineage boundaries."
+		)
+		outputs = [str(item) for item in sinks[:5]]
+		if outputs:
+			outputs_text = ", ".join(outputs)
+		else:
+			outputs_text = "No explicit output datasets/endpoints were detected in the lineage boundary list."
+
+		critical_module = top_pagerank[0]["path"] if top_pagerank else "unknown"
+		blast_radius_answer = (
+			f"Failure of {critical_module} would likely impact connected modules on the structural critical path and downstream lineage sinks."
+			if top_pagerank
+			else "Blast radius cannot be quantified because no PageRank evidence is available."
+		)
+
+		if cluster_distribution:
+			top_cluster = cluster_distribution[0]
+			logic_answer = (
+				f"Business logic appears most concentrated in cluster '{top_cluster['cluster']}' "
+				f"({top_cluster['module_count']} modules, share={top_cluster['share']})."
+			)
+		else:
+			logic_answer = "Business logic concentration cannot be determined because no cluster distribution evidence is available."
+
+		velocity_lines = [f"{row['path']} ({row['value']} changes)" for row in top_velocity[:5]]
+		velocity_answer = "; ".join(velocity_lines) if velocity_lines else "No git velocity evidence is available."
+
+		return [
+			{
+				"question": "What is the primary data ingestion path?",
+				"answer": ingestion_answer,
+				"evidence": [str(item) for item in sources[:3]] or ["lineage_sources=none"],
+			},
+			{
+				"question": "What are the 3-5 most critical output datasets/endpoints?",
+				"answer": outputs_text,
+				"evidence": outputs[:5] or ["lineage_sinks=none"],
+			},
+			{
+				"question": "What is the blast radius if the most critical module fails?",
+				"answer": blast_radius_answer,
+				"evidence": [
+					f"pagerank[{row['path']}]={row['value']}" for row in top_pagerank[:3]
+				] or ["pagerank=none"],
+			},
+			{
+				"question": "Where is the business logic concentrated vs. distributed?",
+				"answer": logic_answer,
+				"evidence": [
+					f"cluster[{row['cluster']}]={row['module_count']} modules (share={row['share']})"
+					for row in cluster_distribution[:4]
+				] or ["cluster_distribution=none"],
+			},
+			{
+				"question": "What has changed most frequently in the last 90 days (git velocity map)?",
+				"answer": velocity_answer,
+				"evidence": [
+					f"git_velocity[{row['path']}]={row['value']}" for row in top_velocity[:8]
+				] or ["git_velocity=none"],
+			},
+		]
+
 	def _summarize_outliers(self, outliers: list[ModuleNode]) -> list[str]:
 		results: list[str] = []
 		for module_node in outliers:
@@ -648,6 +959,57 @@ class Semanticist:
 			"mental_model": mental_model,
 		}
 
+	def _parse_day_one_questions(self, response_text: Any, evidence_pack: dict[str, Any]) -> list[dict[str, Any]]:
+		required_questions = [
+			"What is the primary data ingestion path?",
+			"What are the 3-5 most critical output datasets/endpoints?",
+			"What is the blast radius if the most critical module fails?",
+			"Where is the business logic concentrated vs. distributed?",
+			"What has changed most frequently in the last 90 days (git velocity map)?",
+		]
+		default_answers = {
+			item["question"]: item
+			for item in self._default_day_one_questions(evidence_pack)
+		}
+
+		payload = self._extract_json_payload(response_text)
+		if not isinstance(payload, dict):
+			return [default_answers[question] for question in required_questions]
+
+		answer_rows: list[dict[str, Any]] = []
+		raw_answers = payload.get("answers")
+		if isinstance(raw_answers, list):
+			for item in raw_answers:
+				if isinstance(item, dict):
+					answer_rows.append(item)
+		elif isinstance(payload.get("questions"), list):
+			for item in payload.get("questions", []):
+				if isinstance(item, dict):
+					answer_rows.append(item)
+
+		resolved: dict[str, dict[str, Any]] = {}
+		for item in answer_rows:
+			question = str(item.get("question") or "").strip()
+			if not question:
+				continue
+			answer = str(item.get("answer") or "").strip()
+			evidence = item.get("evidence")
+			if isinstance(evidence, list):
+				evidence_list = [str(row).strip() for row in evidence if str(row).strip()]
+			else:
+				evidence_list = []
+			if question in required_questions:
+				resolved[question] = {
+					"question": question,
+					"answer": answer or default_answers[question]["answer"],
+					"evidence": evidence_list or list(default_answers[question]["evidence"]),
+				}
+
+		final_rows: list[dict[str, Any]] = []
+		for question in required_questions:
+			final_rows.append(resolved.get(question, default_answers[question]))
+		return final_rows
+
 	def _extract_json_payload(self, response_text: Any) -> Any:
 		if not isinstance(response_text, str) or not response_text.strip():
 			return None
@@ -704,4 +1066,39 @@ class Semanticist:
 			"documentation_drift": documentation_drift,
 			"drift_reason": drift_reason or default["drift_reason"],
 		}
+
+	def _resolve_semantic_confidence(self, metadata: dict[str, Any]) -> float:
+		for key in ("confidence_level", "purpose_statement_confidence", "llm_confidence"):
+			value = metadata.get(key)
+			if isinstance(value, (int, float)):
+				return max(0.0, min(1.0, float(value)))
+			if isinstance(value, str):
+				mapped = self._map_confidence_label(value)
+				if mapped is not None:
+					return mapped
+
+		cluster_confidence = metadata.get("cluster_assignment_confidence")
+		if isinstance(cluster_confidence, str):
+			mapped = self._map_confidence_label(cluster_confidence)
+			if mapped is not None:
+				return mapped
+		if isinstance(cluster_confidence, (int, float)):
+			return max(0.0, min(1.0, float(cluster_confidence)))
+
+		return 0.6
+
+	def _map_confidence_label(self, value: str) -> float | None:
+		label = value.strip().lower()
+		mapping = {"high": 0.9, "medium": 0.6, "low": 0.3}
+		return mapping.get(label)
+
+	def _trace_evidence_source(self, payload: dict[str, Any]) -> str:
+		usage = payload.get("usage")
+		if isinstance(usage, dict):
+			metadata = usage.get("metadata")
+			if isinstance(metadata, dict):
+				module_path = metadata.get("module_path")
+				if isinstance(module_path, str) and module_path.strip():
+					return f"{module_path}:1"
+		return "semanticist.py:1"
 
